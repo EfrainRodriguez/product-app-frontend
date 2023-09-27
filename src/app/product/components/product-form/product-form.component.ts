@@ -11,6 +11,7 @@ import { ProductHttpService } from '../../services/product-http.service';
 })
 export class ProductFormComponent {
   hasError = false;
+  isLoading = false;
 
   productCategories = [
     { value: 'technology', label: 'Technology' },
@@ -44,6 +45,7 @@ export class ProductFormComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
     this.productHttpService
       .uploadImage(this.productForm.value.image)
       .subscribe((res: any) => {
@@ -67,6 +69,7 @@ export class ProductFormComponent {
               this.productHttpService
                 .updateProduct(params['id'], this.productForm.value)
                 .subscribe(() => {
+                  this.isLoading = false;
                   this.router.navigate(['/product']);
                   alert('Product updated successfully!');
                 });
@@ -81,6 +84,7 @@ export class ProductFormComponent {
                 category: this.productForm.value.category,
               })
               .subscribe(() => {
+                this.isLoading = false;
                 this.productForm.reset();
                 this.router.navigate(['/product']);
                 alert('Product created successfully!');

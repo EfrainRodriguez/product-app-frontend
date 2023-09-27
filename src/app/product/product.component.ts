@@ -11,6 +11,7 @@ import { Product, PaginatedProductResponse } from './models/product.model';
 })
 export class ProductComponent implements OnInit {
   products: Product[] = [];
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -26,9 +27,11 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
+    this.isLoading = true;
     this.productHttpService.getProducts().subscribe((response) => {
       const formatedResponse = response as PaginatedProductResponse;
       this.products = formatedResponse.data;
+      this.isLoading = false;
     });
   }
 }

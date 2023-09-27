@@ -11,6 +11,7 @@ import { ProductEditComponent } from './components/product-edit/product-edit.com
 import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule],
@@ -23,7 +24,8 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     ProductEditComponent,
     ProductComponent,
     ProductDetailsComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    SpinnerComponent
   ],
   exports: [
     ProductItemComponent,

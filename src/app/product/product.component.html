@@ -19,9 +19,12 @@
       [product]="product"
     ></app-product-item>
   </div>
-  <h1 *ngIf="products.length === 0" class="text-center text-2xl text-gray-500">
+  <h1 *ngIf="products.length === 0 && !isLoading" class="text-center text-2xl text-gray-500">
     No products to show. Please create a new one.
   </h1>
+  <div *ngIf="isLoading" class="flex justify-center mt-16">
+    <app-spinner></app-spinner>
+  </div>
   <div class="mt-8 flex justify-end">
     <app-pagination *ngIf="products.length > 0"></app-pagination>
   </div>
