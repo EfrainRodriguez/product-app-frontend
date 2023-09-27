@@ -1,8 +1,8 @@
-<form>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
     <div class="mb-2">
       <label for="name" class="block mb-2 text-sm font-medium text-gray-700"
-        >Name</label
+        >Name*</label
       >
       <input
         type="text"
@@ -10,23 +10,22 @@
         class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Type the product name"
         required
+        formControlName="name"
       />
-    </div>
-    <div class="mb-2">
-      <label for="sku" class="block mb-2 text-sm font-medium text-gray-700"
-        >Sku</label
+      <p
+        class="text-red-500 text-sm mt-1"
+        *ngIf="
+          (productForm.get('name')?.invalid &&
+            productForm.get('name')?.touched) ||
+          (productForm.get('name')?.value === '' && hasError)
+        "
       >
-      <input
-        type="text"
-        id="sku"
-        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        placeholder="Type the product sku"
-        required
-      />
+        Name is required
+      </p>
     </div>
     <div class="mb-2">
       <label for="price" class="block mb-2 text-sm font-medium text-gray-700"
-        >Price</label
+        >Price*</label
       >
       <input
         type="number"
@@ -34,11 +33,22 @@
         class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Type the product price"
         required
+        formControlName="price"
       />
+      <p
+        class="text-red-500 text-sm mt-1"
+        *ngIf="
+          (productForm.get('price')?.invalid &&
+            productForm.get('price')?.touched) ||
+          (productForm.get('price')?.value === '' && hasError)
+        "
+      >
+        Price is required
+      </p>
     </div>
     <div class="mb-2">
       <label for="stock" class="block mb-2 text-sm font-medium text-gray-700"
-        >Stock</label
+        >Stock*</label
       >
       <input
         type="number"
@@ -46,34 +56,54 @@
         class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Type the product stock"
         required
+        formControlName="stock"
       />
+      <p
+        class="text-red-500 text-sm mt-1"
+        *ngIf="
+          (productForm.get('stock')?.invalid &&
+            productForm.get('stock')?.touched) ||
+          (productForm.get('stock')?.value === '' && hasError)
+        "
+      >
+        Stock is required
+      </p>
     </div>
     <div class="mb-2">
       <label for="tags" class="block mb-2 text-sm font-medium text-gray-700"
-        >Tag</label
+        >Category*</label
       >
       <select
-        id="tags"
-        name="tag"
+        id="category"
+        formControlName="category"
+        name="category"
         class="border w-full border-gray-300 text-sm text-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         <option value="" disabled selected>Select a tag</option>
-        <option value="tag.value" *ngFor="let tag of productTags">
-          {{ tag.label }}
+        <option *ngFor="let category of productCategories" [value]="category.value">
+          {{ category.label }}
         </option>
       </select>
+      <p
+        class="text-red-500 text-sm mt-1"
+        *ngIf="
+          (productForm.get('category')?.invalid &&
+            productForm.get('category')?.touched) ||
+          (productForm.get('category')?.value === '' && hasError)
+        "
+      >
+        Category is required
+      </p>
     </div>
     <div class="mb-2">
-      <label
-        for="default-range"
-        class="block mb-2 text-sm font-medium text-gray-700"
+      <label for="rating" class="block mb-2 text-sm font-medium text-gray-700"
         >Rating</label
       >
       <input
         name="rating"
-        id="default-range"
+        id="rating"
+        formControlName="rating"
         type="range"
-        value="1"
         min="1"
         max="5"
         step="1"
@@ -99,13 +129,16 @@
     </div>
   </div>
   <div class="mb-2 mt-2">
-    <label for="description" class="block mb-2 text-sm font-medium text-gray-700"
+    <label
+      for="description"
+      class="block mb-2 text-sm font-medium text-gray-700"
       >Description</label
     >
     <textarea
       type="text"
       rows="3"
       id="description"
+      formControlName="description"
       class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       placeholder="Type the product description"
       required
@@ -116,7 +149,7 @@
       type="submit"
       class="text-white bg-primary hover:bg-primary-dark focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
     >
-      Create product
+      {{ isEditing ? "Edit" : "Create" }} Product
     </button>
   </div>
 </form>

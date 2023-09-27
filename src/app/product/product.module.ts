@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { ProductItemComponent } from './product-item/product-item.component';
-import { PaginationComponent } from './pagination/pagination.component';
-import { FiltersComponent } from './filters/filters.component';
-import { ProductFormComponent } from './product-form/product-form.component';
-import { ProductCreateComponent } from './product-create/product-create.component';
-import { ProductEditComponent } from './product-edit/product-edit.component';
+import { ProductItemComponent } from './components/product-item/product-item.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { FiltersComponent } from './components/filters/filters.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
+import { ProductCreateComponent } from './components/product-create/product-create.component';
+import { ProductEditComponent } from './components/product-edit/product-edit.component';
 import { ProductComponent } from './product.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { BackButtonComponent } from './back-button/back-button.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   declarations: [
     ProductItemComponent,
     PaginationComponent,

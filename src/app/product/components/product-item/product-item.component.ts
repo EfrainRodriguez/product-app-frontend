@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-item',
@@ -7,10 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-item.component.css']
 })
 export class ProductItemComponent {
+  @Input() product: Product | undefined;
 
   constructor(private router: Router) { }
 
   redirectToProductDetails() {
-    this.router.navigate(['/product', 1]);
+    this.router.navigate(['/product', this.product?._id]);
   }
 }
