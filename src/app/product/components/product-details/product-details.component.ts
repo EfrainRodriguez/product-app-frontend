@@ -37,4 +37,13 @@ export class ProductDetailsComponent implements OnInit {
       this.product = product as Product;
     });
   }
+
+  deleteProduct() {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productHttpService.deleteProduct(this.id!).subscribe(() => {
+        this.router.navigate(['/product']);
+        alert('Product deleted successfully!');
+      });
+    }
+  }
 }

@@ -27,4 +27,8 @@ export class ProductHttpService {
   updateProduct(id: string, product: any) {
     return this.http.put(`${this.urlBase}/${id}`, product);
   }
+
+  deleteProduct(id: string) {
+    return this.http.delete(`${this.urlBase}/${id}`);
+  }
 }
