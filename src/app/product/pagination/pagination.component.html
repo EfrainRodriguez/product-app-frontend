@@ -1,0 +1,23 @@
+<div class="flex gap-2">
+  <!-- Previous Button -->
+  <button
+    class="flex items-center justify-center px-3 p-2.5 text-sm font-medium text-gray-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+  >
+    Previous
+  </button>
+
+  <!-- Next Button -->
+  <button
+    class="flex items-center justify-center px-3 p-2.5 text-sm font-medium text-gray-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+  >
+    Next
+  </button>
+  
+  <select
+    class="border border-gray-300 text-sm text-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+  >
+    <option value="item.value" *ngFor="let item of options">
+      {{ item.label }}
+    </option>
+  </select>
+</div>

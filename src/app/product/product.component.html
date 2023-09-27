@@ -1,0 +1,28 @@
+<div class="container max-w-screen-xl mx-auto px-4 py-16">
+  <div class="mb-8 flex flex-col gap-4 md:flex-row justify-between">
+    <app-filters></app-filters>
+    <div class="flex gap-2 justify-between">
+      <app-pagination></app-pagination>
+      <button
+        class="flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-blue-300"
+        (click)="redirectToProductCreate()"
+      >
+        New Product
+      </button>
+    </div>
+  </div>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+  >
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+  </div>
+  <div class="mt-8 flex justify-end">
+    <app-pagination></app-pagination>
+  </div>
+</div>
