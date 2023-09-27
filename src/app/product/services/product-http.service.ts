@@ -4,13 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductHttpService {
-
   urlBase = `${environment.api}/products`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProducts() {
     return this.http.get(this.urlBase);
@@ -30,5 +29,15 @@ export class ProductHttpService {
 
   deleteProduct(id: string) {
     return this.http.delete(`${this.urlBase}/${id}`);
+  }
+
+  uploadImage(image: any) {
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'angular_preset');
+    return this.http.post(
+      `https://api.cloudinary.com/v1_1/monkeywit/upload`,
+      formData
+    );
   }
 }

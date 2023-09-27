@@ -19,6 +19,7 @@ export class ProductEditComponent implements OnInit {
     stock: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     rating: new FormControl('1', [Validators.required]),
+    image: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -43,7 +44,6 @@ export class ProductEditComponent implements OnInit {
   getProduct(id: string) {
     this.productHttpService.getProduct(id).subscribe((response) => {
       const product = response as Product;
-      console.log(product);
       this.productForm = new FormGroup({
         name: new FormControl(product?.name, [Validators.required]),
         description: new FormControl(product?.description),
@@ -51,8 +51,8 @@ export class ProductEditComponent implements OnInit {
         stock: new FormControl(product?.stock, [Validators.required]),
         category: new FormControl(product?.category, [Validators.required]),
         rating: new FormControl(product?.rating, [Validators.required]),
+        image: new FormControl(product?.image, [Validators.required]),
       });
-      console.log(this.productForm);
     });
   }
 }

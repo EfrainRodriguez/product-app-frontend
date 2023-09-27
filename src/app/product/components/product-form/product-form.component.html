@@ -80,7 +80,10 @@
         class="border w-full border-gray-300 text-sm text-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         <option value="" disabled selected>Select a tag</option>
-        <option *ngFor="let category of productCategories" [value]="category.value">
+        <option
+          *ngFor="let category of productCategories"
+          [value]="category.value"
+        >
           {{ category.label }}
         </option>
       </select>
@@ -128,7 +131,7 @@
       </ul>
     </div>
   </div>
-  <div class="mb-2 mt-2">
+  <div class="mb-2 mt-8 sm:mt-2">
     <label
       for="description"
       class="block mb-2 text-sm font-medium text-gray-700"
@@ -144,6 +147,19 @@
       required
     ></textarea>
   </div>
+  <div class="mb-2 mt-2">
+    <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input"
+      >Upload image</label
+    >
+    <input
+      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer"
+      id="file_input"
+      type="file"
+      accept="image/*"
+      (change)="onSelectFile($event)"
+    />
+  </div>
+
   <div class="flex justify-end mt-6">
     <button
       type="submit"

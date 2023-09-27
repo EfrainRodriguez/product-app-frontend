@@ -14,9 +14,15 @@
   <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
   >
-    <app-product-item *ngFor="let product of products" [product]="product"></app-product-item>
+    <app-product-item
+      *ngFor="let product of products"
+      [product]="product"
+    ></app-product-item>
   </div>
+  <h1 *ngIf="products.length === 0" class="text-center text-2xl text-gray-500">
+    No products to show. Please create a new one.
+  </h1>
   <div class="mt-8 flex justify-end">
-    <app-pagination></app-pagination>
+    <app-pagination *ngIf="products.length > 0"></app-pagination>
   </div>
 </div>

@@ -28,6 +28,7 @@ export class ProductFormComponent {
     stock: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     rating: new FormControl('1', [Validators.required]),
+    image: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -36,42 +37,56 @@ export class ProductFormComponent {
     private route: ActivatedRoute
   ) {}
 
-  onSubmit() {
-    if (
-      !this.productForm.value.name ||
-      !this.productForm.value.price ||
-      !this.productForm.value.stock ||
-      !this.productForm.value.category ||
-      !this.productForm.value.rating
-    ) {
-      this.hasError = true;
-    } else {
-      this.hasError = false;
+  onSelectFile(event: any) {
+    this.productForm.patchValue({
+      image: event.target.files[0],
+    });
+  }
 
-      if (this.isEditing) {
-        this.route.params.subscribe((params) => {
-          this.productHttpService
-            .updateProduct(params['id'], this.productForm.value)
-            .subscribe(() => {
-              this.router.navigate(['/product']);
-              alert('Product updated successfully!');
-            });
+  onSubmit() {
+    this.productHttpService
+      .uploadImage(this.productForm.value.image)
+      .subscribe((res: any) => {
+        const imageUrl = res.secure_url;
+        this.productForm.patchValue({
+          image: imageUrl,
         });
-      } else {
-        this.productHttpService
-          .createProduct({
-            ...this.productForm.value,
-            price: Number(this.productForm.value.price),
-            stock: Number(this.productForm.value.stock),
-            rating: Number(this.productForm.value.rating),
-            category: this.productForm.value.category,
-          })
-          .subscribe(() => {
-            this.productForm.reset();
-            this.router.navigate(['/product']);
-            alert('Product created successfully!');
-          });
-      }
-    }
+        if (
+          !this.productForm.value.name ||
+          !this.productForm.value.price ||
+          !this.productForm.value.stock ||
+          !this.productForm.value.category ||
+          !this.productForm.value.rating
+        ) {
+          this.hasError = true;
+        } else {
+          this.hasError = false;
+    
+          if (this.isEditing) {
+            this.route.params.subscribe((params) => {
+              this.productHttpService
+                .updateProduct(params['id'], this.productForm.value)
+                .subscribe(() => {
+                  this.router.navigate(['/product']);
+                  alert('Product updated successfully!');
+                });
+            });
+          } else {
+            this.productHttpService
+              .createProduct({
+                ...this.productForm.value,
+                price: Number(this.productForm.value.price),
+                stock: Number(this.productForm.value.stock),
+                rating: Number(this.productForm.value.rating),
+                category: this.productForm.value.category,
+              })
+              .subscribe(() => {
+                this.productForm.reset();
+                this.router.navigate(['/product']);
+                alert('Product created successfully!');
+              });
+          }
+        }
+      });
   }
 }
