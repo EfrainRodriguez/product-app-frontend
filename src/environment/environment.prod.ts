@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'https://fakestoreapi.com',
+  api: 'https://product-app-api-wat9.onrender.com/api',
 };
