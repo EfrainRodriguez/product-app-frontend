@@ -1,7 +1,7 @@
 <div class="container max-w-screen-xl mx-auto px-4 py-16">
   <div class="mb-8 flex flex-col gap-4 md:flex-row justify-between">
     <app-filters (searchEvent)="search($event)"></app-filters>
-    <div class="flex gap-2 justify-between">
+    <div class="flex gap-2 justify-between flex-wrap sm:flex-nowrap flex-col-reverse sm:flex-row">
       <app-pagination
         (limitEvent)="changeLimit($event)"
         (pageEvent)="changePage($event)"
@@ -10,7 +10,7 @@
         [page]="page"
       ></app-pagination>
       <button
-        class="flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-blue-300"
+        class="w-full mb-2 sm:mb-0 flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-blue-300"
         (click)="redirectToProductCreate()"
       >
         New Product

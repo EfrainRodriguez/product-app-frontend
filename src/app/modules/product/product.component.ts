@@ -56,6 +56,7 @@ export class ProductComponent implements OnInit {
 
   changeLimit(limit: string | number) {
     this.limit = Number(limit);
+    this.page = 0;
     this.getProducts();
   }
 
