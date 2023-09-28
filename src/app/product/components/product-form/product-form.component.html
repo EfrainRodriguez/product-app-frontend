@@ -158,6 +158,12 @@
       accept="image/*"
       (change)="onSelectFile($event)"
     />
+    <p
+      class="text-red-500 text-sm mt-1"
+      *ngIf="productForm.get('image')?.value === '' && hasError"
+    >
+      Image is required
+    </p>
   </div>
 
   <div class="flex justify-end mt-6 items-center">

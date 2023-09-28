@@ -45,36 +45,56 @@ export class ProductFormComponent {
   }
 
   onSubmit() {
-    this.isLoading = true;
-    this.productHttpService
-      .uploadImage(this.productForm.value.image)
-      .subscribe((res: any) => {
-        const imageUrl = res.secure_url;
-        this.productForm.patchValue({
-          image: imageUrl,
-        });
-        if (
-          !this.productForm.value.name ||
-          !this.productForm.value.price ||
-          !this.productForm.value.stock ||
-          !this.productForm.value.category ||
-          !this.productForm.value.rating
-        ) {
-          this.hasError = true;
-        } else {
-          this.hasError = false;
-    
-          if (this.isEditing) {
-            this.route.params.subscribe((params) => {
-              this.productHttpService
-                .updateProduct(params['id'], this.productForm.value)
-                .subscribe(() => {
-                  this.isLoading = false;
-                  this.router.navigate(['/product']);
-                  alert('Product updated successfully!');
-                });
+    if (
+      !this.productForm.value.name ||
+      !this.productForm.value.price ||
+      !this.productForm.value.stock ||
+      !this.productForm.value.category ||
+      !this.productForm.value.rating ||
+      !this.productForm.value.image
+    ) {
+      this.hasError = true;
+    } else {
+      this.hasError = false;
+      this.isLoading = true;
+      if (this.isEditing) {
+        if (this.productForm.value.image instanceof File) {
+          this.productHttpService
+            .uploadImage(this.productForm.value.image)
+            .subscribe((res: any) => {
+              const imageUrl = res.secure_url;
+              this.productForm.patchValue({
+                image: imageUrl,
+              });
+              this.route.params.subscribe((params) => {
+                this.productHttpService
+                  .updateProduct(params['id'], this.productForm.value)
+                  .subscribe(() => {
+                    this.isLoading = false;
+                    this.router.navigate(['/product']);
+                    alert('Product updated successfully!');
+                  });
+              });
             });
-          } else {
+        } else {
+          this.route.params.subscribe((params) => {
+            this.productHttpService
+              .updateProduct(params['id'], this.productForm.value)
+              .subscribe(() => {
+                this.isLoading = false;
+                this.router.navigate(['/product']);
+                alert('Product updated successfully!');
+              });
+          });
+        }
+      } else {
+        this.productHttpService
+          .uploadImage(this.productForm.value.image)
+          .subscribe((res: any) => {
+            const imageUrl = res.secure_url;
+            this.productForm.patchValue({
+              image: imageUrl,
+            });
             this.productHttpService
               .createProduct({
                 ...this.productForm.value,
@@ -89,8 +109,8 @@ export class ProductFormComponent {
                 this.router.navigate(['/product']);
                 alert('Product created successfully!');
               });
-          }
-        }
-      });
+          });
+      }
+    }
   }
 }

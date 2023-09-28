@@ -2,7 +2,13 @@
   <div class="mb-8 flex flex-col gap-4 md:flex-row justify-between">
     <app-filters></app-filters>
     <div class="flex gap-2 justify-between">
-      <app-pagination></app-pagination>
+      <app-pagination
+        (limitEvent)="changeLimit($event)"
+        (pageEvent)="changePage($event)"
+        [count]="count"
+        [limit]="limit"
+        [page]="page"
+      ></app-pagination>
       <button
         class="flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-blue-300"
         (click)="redirectToProductCreate()"
@@ -19,13 +25,16 @@
       [product]="product"
     ></app-product-item>
   </div>
-  <h1 *ngIf="products.length === 0 && !isLoading" class="text-center text-2xl text-gray-500">
+  <h1
+    *ngIf="products.length === 0 && !isLoading"
+    class="text-center text-2xl text-gray-500"
+  >
     No products to show. Please create a new one.
   </h1>
   <div *ngIf="isLoading" class="flex justify-center mt-16">
     <app-spinner></app-spinner>
   </div>
-  <div class="mt-8 flex justify-end">
+  <!-- <div class="mt-8 flex justify-end">
     <app-pagination *ngIf="products.length > 0"></app-pagination>
-  </div>
+  </div> -->
 </div>

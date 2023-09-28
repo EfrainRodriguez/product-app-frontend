@@ -11,8 +11,8 @@ export class ProductHttpService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts() {
-    return this.http.get(this.urlBase);
+  getProducts(query: string = '') {
+    return this.http.get(`${this.urlBase}?${query}`);
   }
 
   getProduct(id: string) {
