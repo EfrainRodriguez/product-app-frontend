@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { ProductHttpService } from '../../services/product-http.service';
+import { showToast } from 'src/app/state/actions/toast.action';
+import { AppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-product-form',
@@ -35,7 +38,8 @@ export class ProductFormComponent {
   constructor(
     private productHttpService: ProductHttpService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<AppState>
   ) {}
 
   isFormInvalid() {
@@ -62,7 +66,9 @@ export class ProductFormComponent {
         .subscribe(() => {
           this.isLoading = false;
           this.router.navigate(['/product']);
-          alert('Product updated successfully!');
+          this.store.dispatch(
+            showToast('Product updated successfully!', 'success')
+          );
         });
     });
   }
@@ -74,7 +80,9 @@ export class ProductFormComponent {
         this.isLoading = false;
         this.productForm.reset();
         this.router.navigate(['/product']);
-        alert('Product created successfully!');
+        this.store.dispatch(
+          showToast('Product created successfully!', 'success')
+        );
       });
   }
 

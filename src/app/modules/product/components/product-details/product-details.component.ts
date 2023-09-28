@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { Product } from '../../models/product.model';
 import { ProductHttpService } from '../../services/product-http.service';
+import { AppState } from 'src/app/state/app.state';
+import { showToast } from 'src/app/state/actions/toast.action';
 
 @Component({
   selector: 'app-product-details',
@@ -16,7 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productHttpService: ProductHttpService
+    private productHttpService: ProductHttpService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +46,9 @@ export class ProductDetailsComponent implements OnInit {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productHttpService.deleteProduct(this.id!).subscribe(() => {
         this.router.navigate(['/product']);
-        alert('Product deleted successfully!');
+        this.store.dispatch(
+          showToast('Product deleted successfully!', 'success')
+        );
       });
     }
   }
