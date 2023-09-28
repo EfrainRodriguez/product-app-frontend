@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProductHttpService } from './services/product-http.service';
@@ -9,13 +9,15 @@ import { Product, PaginatedProductResponse } from './models/product.model';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
-export class ProductComponent implements OnInit, OnChanges  {
+export class ProductComponent implements OnInit {
   products: Product[] = [];
   isLoading = false;
   page = 0;
-  limit = 5;
+  limit = 8;
   sort = -1;
+  orderBy = 'createdAt';
   count = 0;
+  searchByname = '';
 
   constructor(
     private router: Router,
@@ -23,10 +25,6 @@ export class ProductComponent implements OnInit, OnChanges  {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
-  }
-
-  ngOnChanges(changes: any) {
     this.getProducts();
   }
 
@@ -38,7 +36,13 @@ export class ProductComponent implements OnInit, OnChanges  {
     this.isLoading = true;
     this.productHttpService
       .getProducts(
-        `page=${this.page}&limit=${this.limit}&sort=${this.sort}`
+        new URLSearchParams({
+          page: this.page.toString(),
+          limit: this.limit.toString(),
+          sort: this.sort.toString(),
+          orderBy: this.orderBy,
+          name: this.searchByname,
+        }).toString()
       )
       .subscribe((response) => {
         const formatedResponse = response as PaginatedProductResponse;
@@ -61,6 +65,11 @@ export class ProductComponent implements OnInit, OnChanges  {
     } else {
       this.page--;
     }
+    this.getProducts();
+  }
+
+  search(search: string) {
+    this.searchByname = search;
     this.getProducts();
   }
 }

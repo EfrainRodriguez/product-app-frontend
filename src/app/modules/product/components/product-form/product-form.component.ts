@@ -38,25 +38,53 @@ export class ProductFormComponent {
     private route: ActivatedRoute
   ) {}
 
-  onSelectFile(event: any) {
-    this.productForm.patchValue({
-      image: event.target.files[0],
-    });
-  }
-
-  onSubmit() {
-    if (
+  isFormInvalid() {
+    return (
       !this.productForm.value.name ||
       !this.productForm.value.price ||
       !this.productForm.value.stock ||
       !this.productForm.value.category ||
       !this.productForm.value.rating ||
       !this.productForm.value.image
-    ) {
+    );
+  }
+
+  onSelectFile(event: any) {
+    this.productForm.patchValue({
+      image: event.target?.files[0],
+    });
+  }
+
+  updateProduct() {
+    this.route.params.subscribe((params) => {
+      this.productHttpService
+        .updateProduct(params['id'], this.productForm.value)
+        .subscribe(() => {
+          this.isLoading = false;
+          this.router.navigate(['/product']);
+          alert('Product updated successfully!');
+        });
+    });
+  }
+
+  createProduct() {
+    this.productHttpService
+      .createProduct(this.productForm.value)
+      .subscribe(() => {
+        this.isLoading = false;
+        this.productForm.reset();
+        this.router.navigate(['/product']);
+        alert('Product created successfully!');
+      });
+  }
+
+  async onSubmit() {
+    if (this.isFormInvalid()) {
       this.hasError = true;
     } else {
       this.hasError = false;
       this.isLoading = true;
+
       if (this.isEditing) {
         if (this.productForm.value.image instanceof File) {
           this.productHttpService
@@ -66,26 +94,10 @@ export class ProductFormComponent {
               this.productForm.patchValue({
                 image: imageUrl,
               });
-              this.route.params.subscribe((params) => {
-                this.productHttpService
-                  .updateProduct(params['id'], this.productForm.value)
-                  .subscribe(() => {
-                    this.isLoading = false;
-                    this.router.navigate(['/product']);
-                    alert('Product updated successfully!');
-                  });
-              });
+              this.updateProduct();
             });
         } else {
-          this.route.params.subscribe((params) => {
-            this.productHttpService
-              .updateProduct(params['id'], this.productForm.value)
-              .subscribe(() => {
-                this.isLoading = false;
-                this.router.navigate(['/product']);
-                alert('Product updated successfully!');
-              });
-          });
+          this.updateProduct();
         }
       } else {
         this.productHttpService
@@ -95,20 +107,7 @@ export class ProductFormComponent {
             this.productForm.patchValue({
               image: imageUrl,
             });
-            this.productHttpService
-              .createProduct({
-                ...this.productForm.value,
-                price: Number(this.productForm.value.price),
-                stock: Number(this.productForm.value.stock),
-                rating: Number(this.productForm.value.rating),
-                category: this.productForm.value.category,
-              })
-              .subscribe(() => {
-                this.isLoading = false;
-                this.productForm.reset();
-                this.router.navigate(['/product']);
-                alert('Product created successfully!');
-              });
+            this.createProduct();
           });
       }
     }

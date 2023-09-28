@@ -8,12 +8,12 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 export class PaginationComponent {
 
   options = [
-    { value: 10, label: '5' },
-    { value: 20, label: '10' },
-    { value: 30, label: '15' },
+    { value: 8, label: '8' },
+    { value: 16, label: '16' },
+    { value: 32, label: '32' },
   ];
 
-  @Input() limit = 10;
+  @Input() limit = 8;
   @Input() page = 0;
   @Input() count = 0;
 

@@ -1,6 +1,6 @@
 <div class="container max-w-screen-xl mx-auto px-4 py-16">
   <div class="mb-8 flex flex-col gap-4 md:flex-row justify-between">
-    <app-filters></app-filters>
+    <app-filters (searchEvent)="search($event)"></app-filters>
     <div class="flex gap-2 justify-between">
       <app-pagination
         (limitEvent)="changeLimit($event)"
@@ -34,7 +34,14 @@
   <div *ngIf="isLoading" class="flex justify-center mt-16">
     <app-spinner></app-spinner>
   </div>
-  <!-- <div class="mt-8 flex justify-end">
-    <app-pagination *ngIf="products.length > 0"></app-pagination>
-  </div> -->
+  <div class="mt-8 flex justify-end">
+    <app-pagination
+      *ngIf="products.length > 0"
+      (limitEvent)="changeLimit($event)"
+      (pageEvent)="changePage($event)"
+      [count]="count"
+      [limit]="limit"
+      [page]="page"
+    ></app-pagination>
+  </div>
 </div>

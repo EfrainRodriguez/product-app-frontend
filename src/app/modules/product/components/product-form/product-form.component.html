@@ -79,7 +79,7 @@
         name="category"
         class="border w-full border-gray-300 text-sm text-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
-        <option value="" disabled selected>Select a tag</option>
+        <option value="" disabled selected>Select a category</option>
         <option
           *ngFor="let category of productCategories"
           [value]="category.value"
@@ -113,20 +113,11 @@
         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
       <ul class="flex justify-between text-gray-500 w-full px-[10px]">
-        <li class="flex justify-center relative">
-          <span class="absolute">1</span>
-        </li>
-        <li class="flex justify-center relative">
-          <span class="absolute">2</span>
-        </li>
-        <li class="flex justify-center relative">
-          <span class="absolute">3</span>
-        </li>
-        <li class="flex justify-center relative">
-          <span class="absolute">4</span>
-        </li>
-        <li class="flex justify-center relative">
-          <span class="absolute">5</span>
+        <li
+          class="flex justify-center relative"
+          *ngFor="let item of [1, 2, 3, 4, 5]"
+        >
+          <span class="absolute">{{ item }}</span>
         </li>
       </ul>
     </div>
